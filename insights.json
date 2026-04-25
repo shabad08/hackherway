@@ -1,0 +1,49 @@
+{
+  "insights": [
+    {
+      "id": "ins-wheat-2024",
+      "crop": "Wheat",
+      "type": "profit",
+      "title": "Wheat — Strong selling window",
+      "text": "Mandi prices are at MSP (₹2,275/q). Production is up 2.7% but export demand remains strong at $2.1B. Current margins are healthy. Ideal to sell 60–70% of stock now and hold rest for 3–4 weeks.",
+      "tags": ["sell-now", "good-margin"],
+      "date": "2024-03-15"
+    },
+    {
+      "id": "ins-rice-2024",
+      "crop": "Rice",
+      "type": "neutral",
+      "title": "Rice — Caution: prices slightly below MSP in some mandis",
+      "text": "Some markets show rice prices ₹80–100 below MSP of ₹2,183/q. Production up 3.3% YoY adds supply pressure. Wait for government procurement (PMGKAY) to begin in your district before selling if possible.",
+      "tags": ["hold", "watch-msp"],
+      "date": "2024-03-15"
+    },
+    {
+      "id": "ins-cotton-2024",
+      "crop": "Cotton",
+      "type": "loss",
+      "title": "Cotton — Risk zone: production down, prices uncertain",
+      "text": "Cotton production fell 7.5% due to pest pressure. However, international prices are also soft. MSP is ₹5,800/q but many mandis are trading below this. Strongly consider selling to CCI if available in your district.",
+      "tags": ["risk", "consider-cci"],
+      "date": "2024-03-15"
+    },
+    {
+      "id": "ins-mustard-2024",
+      "crop": "Mustard",
+      "type": "profit",
+      "title": "Mustard — Excellent outlook",
+      "text": "Prices are ₹250 above MSP at ₹5,450/q. Export demand for edible oils strong. Production up 6.8%. This is a profitable crop with good export linkage. Farmers can sell freely in open market.",
+      "tags": ["sell-now", "above-msp"],
+      "date": "2024-03-15"
+    },
+    {
+      "id": "ins-gram-2024",
+      "crop": "Gram",
+      "type": "profit",
+      "title": "Gram — Recovery underway",
+      "text": "Despite prices being slightly below MSP, production increase of 9.2% signals improved supply. Government buffer stocking likely. Prices expected to firm up in Q2 2025. Consider short-term storage if you have capacity.",
+      "tags": ["hold", "storage-recommended"],
+      "date": "2024-03-15"
+    }
+  ]
+}

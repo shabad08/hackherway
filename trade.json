@@ -1,0 +1,35 @@
+{
+  "summary": {
+    "totalExports": "$53.1B",
+    "totalImports": "$31.4B",
+    "tradeBalance": "+$21.7B",
+    "exportGrowth": "+9.8%",
+    "importGrowth": "+2.1%",
+    "updatedYear": 2024
+  },
+  "exportDestinations": [
+    { "flag": "🇺🇸", "country": "United States", "value": "$4.2B", "crops": "Rice, Spices" },
+    { "flag": "🇨🇳", "country": "China", "value": "$3.8B", "crops": "Cotton, Oilseeds" },
+    { "flag": "🇧🇩", "country": "Bangladesh", "value": "$3.1B", "crops": "Rice, Onion" },
+    { "flag": "🇦🇪", "country": "UAE", "value": "$2.9B", "crops": "Rice, Cereals" },
+    { "flag": "🇻🇳", "country": "Vietnam", "value": "$1.7B", "crops": "Rice, Maize" },
+    { "flag": "🇸🇦", "country": "Saudi Arabia", "value": "$1.5B", "crops": "Rice, Spices" },
+    { "flag": "🇮🇩", "country": "Indonesia", "value": "$1.2B", "crops": "Cotton, Wheat" }
+  ],
+  "exportsByCommodity": [
+    { "commodity": "Rice", "value": 9.6 },
+    { "commodity": "Cotton", "value": 7.3 },
+    { "commodity": "Sugarcane", "value": 4.8 },
+    { "commodity": "Marine Products", "value": 6.2 },
+    { "commodity": "Spices", "value": 4.1 },
+    { "commodity": "Buffalo Meat", "value": 3.8 }
+  ],
+  "productionHistory": [
+    { "crop": "Rice", "year2023": 132.0, "year2024": 136.3, "changePercent": 3.3 },
+    { "crop": "Wheat", "year2023": 110.5, "year2024": 113.5, "changePercent": 2.7 },
+    { "crop": "Maize", "year2023": 33.7, "year2024": 35.1, "changePercent": 4.2 },
+    { "crop": "Cotton", "year2023": 31.8, "year2024": 29.4, "changePercent": -7.5 },
+    { "crop": "Gram", "year2023": 13.1, "year2024": 14.3, "changePercent": 9.2 },
+    { "crop": "Mustard", "year2023": 11.8, "year2024": 12.6, "changePercent": 6.8 }
+  ]
+}
