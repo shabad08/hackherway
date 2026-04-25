@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<title>KisanArth — India's Agri-Economics Intelligence Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Noto+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --green:#2d7a4f;--green-light:#e8f5ee;--green-mid:#4caf7d;
+  --amber:#b8630a;--amber-light:#fdf3e3;
+  --red:#c0392b;--red-light:#fdecea;
+  --blue:#1a5fa8;--blue-light:#e8f0fb;
+  --text:#1a1a1a;--text2:#4a4a4a;--text3:#888;
+  --border:#e0e0e0;--bg:#f7f9f5;--card:#fff;
+}
+body{font-family:'Noto Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px}
+.app{width:100%;margin:0;padding:0 0 60px}
+.header{background:var(--green);padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.header-left{display:flex;align-items:center;gap:10px;flex:1}
+.logo{font-family:'Sora',sans-serif;font-size:18px;font-weight:600;color:#fff;letter-spacing:-0.5px}
+.logo span{color:#a8e6be}
+.tagline{font-size:10px;color:#a8e6be;margin-top:1px}
+.header-right{display:flex;align-items:center;gap:6px}
+.badge{background:rgba(255,255,255,0.15);color:#fff;font-size:10px;padding:5px 10px;border-radius:20px;border:1px solid rgba(255,255,255,0.25)}
+.nav{background:#fff;border-bottom:2px solid var(--border);display:flex;justify-content:center;padding:0;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{padding:14px 16px;font-size:12px;font-weight:500;color:var(--text3);border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all 0.2s;font-family:'Noto Sans',sans-serif;min-height:48px;display:flex;align-items:center;flex-shrink:0;margin:0 4px}
+.tab:active{background:rgba(45,122,79,0.05)}
+.tab:hover{color:var(--green)}
+.tab.active{color:var(--green);border-bottom-color:var(--green)}
+.content{padding:16px}
+.section{display:none}
+.section.active{display:block}
+.row{display:grid;gap:12px;margin-bottom:16px}
+.row-4{grid-template-columns:1fr 1fr}
+.row-2{grid-template-columns:1fr}
+.row-3{grid-template-columns:1fr}
+@media(min-width:601px){
+  .app{max-width:1100px;margin:0 auto;padding:0 0 40px}
+  .header{padding:18px 28px}
+  .content{padding:24px 28px}
+  .row{gap:16px;margin-bottom:20px}
+  .row-4{grid-template-columns:repeat(4,1fr)}
+  .row-2{grid-template-columns:repeat(2,1fr)}
+  .row-3{grid-template-columns:repeat(3,1fr)}
+  .nav{padding:0 28px;overflow-x:auto}
+  .tab{padding:14px 18px}
+}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.card-title{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;font-family:'Sora',sans-serif}
+.metric{font-size:22px;font-weight:600;font-family:'Sora',sans-serif;color:var(--text)}
+.metric-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.up{color:var(--green-mid)}
+.down{color:var(--red)}
+.neutral{color:var(--amber)}
+.section-title{font-family:'Sora',sans-serif;font-size:18px;font-weight:600;color:var(--text);margin-bottom:4px}
+.section-desc{font-size:12px;color:var(--text3);margin-bottom:16px}
+select,input{border:1px solid var(--border);border-radius:8px;padding:12px;font-size:14px;background:#fff;color:var(--text);font-family:'Noto Sans',sans-serif;outline:none;width:100%;-webkit-appearance:none;appearance:none;min-height:48px}
+select:focus,input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(45,122,79,0.1)}
+.dropdown-arrow{background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:12px 8px;padding-right:40px;cursor:pointer}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
+.filter-row label{font-size:12px;color:var(--text3);display:flex;flex-direction:column;gap:4px;flex:1;min-width:140px}
+.big-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:10px 8px;font-size:10px;text-transform:uppercase;letter-spacing:0.3px;color:var(--text3);border-bottom:2px solid var(--border);font-weight:500}
+td{padding:10px 8px;border-bottom:1px solid #f0f0f0;color:var(--text2)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f9f9f9}
+.pill{display:inline-block;padding:3px 8px;border-radius:16px;font-size:10px;font-weight:500}
+.pill-green{background:var(--green-light);color:var(--green)}
+.pill-red{background:var(--red-light);color:var(--red)}
+.pill-amber{background:var(--amber-light);color:var(--amber)}
+.insight-card{border-radius:10px;padding:14px;margin-bottom:12px;border-left:4px solid}
+.insight-profit{background:var(--green-light);border-color:var(--green)}
+.insight-loss{background:var(--red-light);border-color:var(--red)}
+.insight-neutral{background:var(--amber-light);border-color:var(--amber)}
+.insight-title{font-weight:600;font-size:13px;margin-bottom:4px;font-family:'Sora',sans-serif}
+.insight-text{font-size:12px;color:var(--text2);line-height:1.6}
+.calc-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:601px){.calc-grid{grid-template-columns:1fr 1fr}}
+.calc-input-group{margin-bottom:12px}
+.calc-input-group label{font-size:12px;color:var(--text3);display:block;margin-bottom:6px;font-weight:500}
+.calc-input-group input{width:100%}
+.result-box{background:var(--green-light);border-radius:10px;padding:14px}
+.result-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:12px}
+.result-row:last-child{border-bottom:none;font-weight:600;font-size:14px;margin-top:6px}
+.result-label{color:var(--text2)}
+.result-val{font-weight:500;font-family:'Sora',sans-serif}
+.calculator-card{display:grid;gap:18px}
+@media(min-width:901px){.calculator-card{grid-template-columns:1.05fr 0.95fr}}
+.calculator-visual{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:24px;box-shadow:0 18px 45px rgba(45,122,79,0.08);display:flex;flex-direction:column;align-items:center;gap:18px}
+.visual-head{display:flex;flex-direction:column;gap:6px;text-align:center}
+.visual-tag{font-size:11px;text-transform:uppercase;letter-spacing:0.2em;color:var(--green-mid)}
+.visual-title{font-size:22px;font-weight:700;color:var(--text);line-height:1.1}
+.wheat-illu{width:100%;max-width:280px}
+.wheat-illu svg{width:100%;height:auto;display:block}
+.visual-copy{max-width:320px;text-align:center}
+.visual-copy-title{font-size:15px;font-weight:600;color:var(--text)}
+.visual-copy-text{font-size:13px;color:var(--text3);line-height:1.7;margin-top:8px}
+.calculator-inputs{display:grid;gap:16px}
+.calc-panel{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:22px;box-shadow:0 14px 35px rgba(0,0,0,0.06)}
+.currency-switcher{display:flex;gap:8px;background:rgba(242,247,242,0.9);padding:8px;border-radius:999px;border:1px solid var(--border);width:max-content;margin-bottom:18px}
+.currency-btn{background:transparent;border:none;color:var(--text2);font-size:12px;font-weight:700;padding:10px 16px;border-radius:999px;cursor:pointer;transition:all 0.2s}
+.currency-btn.active{background:linear-gradient(135deg,var(--green) 0%,#1d6639 100%);color:#fff;box-shadow:0 12px 24px rgba(45,122,79,0.18)}
+.primary-button{width:100%;border:none;background:linear-gradient(135deg,var(--green) 0%,#1a5a38 100%);color:#fff;font-size:14px;font-weight:700;padding:14px 18px;border-radius:16px;cursor:pointer;transition:transform 0.2s}
+.primary-button:hover{transform:translateY(-1px)}
+.calc-summary{background:var(--green-light);border-radius:20px;padding:18px}
+.calc-summary .card-title{margin-bottom:12px}
+.calc-summary .result-row{padding:10px 0;font-size:13px}
+.crop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+@media(max-width:600px){.crop-grid{grid-template-columns:repeat(2,1fr)}}
+.crop-item{text-align:center;cursor:pointer;padding:12px;border-radius:12px;transition:all 0.2s;border:2px solid transparent}
+.crop-item:hover{background:var(--green-light)}
+.crop-item.active{background:var(--green-light);border-color:var(--green)}
+.crop-image{width:60px;height:60px;border-radius:50%;overflow:hidden;margin:0 auto;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+.crop-image img{width:100%;height:100%;object-fit:cover}
+.crop-name{font-size:12px;font-weight:500;margin-top:8px;color:var(--text)}
+.bar-wrap{margin-bottom:10px}
+.bar-label{font-size:11px;color:var(--text2);display:flex;justify-content:space-between;margin-bottom:4px}
+.bar-bg{background:#eee;border-radius:6px;height:12px;overflow:hidden}
+.bar-fill{height:12px;border-radius:6px;transition:width 0.5s}
+.bar-green{background:var(--green)}
+.bar-amber{background:#e8a020}
+.bar-blue{background:var(--blue)}
+.trade-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #f0f0f0}
+.trade-flag{font-size:24px;line-height:1}
+.trade-info{flex:1;min-width:0}
+.trade-name{font-size:13px;font-weight:500;color:var(--text)}
+.trade-val{font-size:11px;color:var(--text3)}
+.trade-amount{font-size:13px;font-weight:600;font-family:'Sora',sans-serif;color:var(--green);white-space:nowrap}
+.recommendation{background:linear-gradient(135deg,var(--green) 0%,#1a5a38 100%);border-radius:12px;padding:16px;color:#fff;margin-top:16px}
+.rec-title{font-family:'Sora',sans-serif;font-size:15px;font-weight:600;margin-bottom:6px}
+.rec-text{font-size:12px;opacity:0.95;line-height:1.7}
+.sparkline{display:flex;align-items:flex-end;gap:4px;height:50px;margin-bottom:8px}
+.spark-bar{flex:1;border-radius:2px 2px 0 0;min-height:6px;background:var(--green);opacity:0.7;transition:opacity 0.2s}
+.spark-bar:hover{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="header">
+  <div class="header-left">
+    <div>
+      <div class="logo">Kisan<span>Arth</span></div>
+      <div class="tagline">India's Agri-Economics Intelligence Platform</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="badge">India</div>
+    
+  </div>
+</div>
+
+<div class="nav" id="nav">
+  <button class="tab active" onclick="switchTab('dashboard',this)">Dashboard</button>
+  <button class="tab" onclick="switchTab('prices',this)">Market Prices</button>
+  <button class="tab" onclick="switchTab('calculator',this)">Profit / Loss</button>
+  <button class="tab" onclick="switchTab('production',this)">Crop Production</button>
+  <button class="tab" onclick="switchTab('trade',this)">Import / Export</button>
+  <button class="tab" onclick="switchTab('insights',this)">Insights</button>
+</div>
+
+<div class="content">
+
+<!-- DASHBOARD -->
+<div class="section active" id="dashboard">
+  <div class="section-title">Overview</div>
+  <div class="section-desc">Snapshot of Indian agricultural economics</div>
+  <div class="filter-row">
+    <label>State <select class="dropdown-arrow"><option>All India</option><option>Punjab</option><option>Haryana</option><option>UP</option><option>MP</option><option>Maharashtra</option></select></label>
+  </div>
+  <div class="crop-grid">
+    <div class="crop-item active" data-crop="Wheat" onclick="updateDashboard('Wheat')">
+      <div class="crop-image"><img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=100&h=100&fit=crop&crop=center" alt="Wheat"></div>
+      <div class="crop-name">Wheat</div>
+    </div>
+    <div class="crop-item" data-crop="Rice" onclick="updateDashboard('Rice')">
+      <div class="crop-image"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=100&h=100&fit=crop&crop=center" alt="Rice"></div>
+      <div class="crop-name">Rice</div>
+    </div>
+    <div class="crop-item" data-crop="Maize" onclick="updateDashboard('Maize')">
+      <div class="crop-image"><img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=100&h=100&fit=crop&crop=center" alt="Maize"></div>
+      <div class="crop-name">Maize</div>
+    </div>
+    <div class="crop-item" data-crop="Cotton" onclick="updateDashboard('Cotton')">
+      <div class="crop-image"><img src="https://images.unsplash.com/photo-1502395809857-fd80069897d0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Cotton"></div>
+      <div class="crop-name">Cotton</div>
+    </div>
+    <div class="crop-item" data-crop="Sugarcane" onclick="updateDashboard('Sugarcane')">
+      <div class="crop-image"><img src="https://images.unsplash.com/photo-1585155113372-6c1808141bf3?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sugarcane"></div>
+      <div class="crop-name">Sugarcane</div>
+    </div>
+    <div class="crop-item" data-crop="Mustard" onclick="updateDashboard('Mustard')">
+      <div class="crop-image"><img src="https://images.unsplash.com/photo-1701188543419-f2e932565056?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mustard"></div>
+      <div class="crop-name">Mustard</div>
+    </div>
+  </div>
+  <div class="row row-4">
+    <div class="card"><div class="card-title">Mandi Price</div><div class="metric" id="d-price">₹2,275</div><div class="metric-sub">per quintal</div></div>
+    <div class="card"><div class="card-title">MSP 2024</div><div class="metric" id="d-msp">₹2,275</div><div class="metric-sub">Min. support price</div></div>
+    <div class="card"><div class="card-title">Production</div><div class="metric" id="d-prod">113.5 MT</div><div class="metric-sub up" id="d-prod-trend">▲ 3.2% YoY</div></div>
+    <div class="card"><div class="card-title">Export Value</div><div class="metric" id="d-export">$2.1B</div><div class="metric-sub up">▲ 8.4% YoY</div></div>
+  </div>
+  <div class="row row-2">
+    <div class="big-card">
+      <div class="card-title">Price Trend (last 6 months)</div>
+      <div class="sparkline" id="sparkline" style="margin-top:12px"></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-top:6px"><span>Oct</span><span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span></div>
+    </div>
+    <div class="big-card">
+      <div class="card-title">Production by Top States (MT)</div>
+      <div id="state-bars" style="margin-top:12px"></div>
+    </div>
+  </div>
+  <div class="recommendation">
+    <div class="rec-title" id="rec-title">Wheat — Good selling window</div>
+    <div class="rec-text" id="rec-text">Current mandi price is at MSP level. Production is up 3.2% but export demand is strong. Margins are stable. Recommended to sell in batches over next 4–6 weeks rather than all at once.</div>
+  </div>
+</div>
+
+<!-- MARKET PRICES -->
+<div class="section" id="prices">
+  <div class="section-title">Market Prices</div>
+  <div class="section-desc">Current mandi prices across major crops and markets</div>
+  <div class="filter-row">
+    <label>Crop <select><option>All Crops</option><option>Wheat</option><option>Rice</option><option>Maize</option><option>Cotton</option><option>Sugarcane</option></select></label>
+    <label>State <select><option>All States</option><option>Punjab</option><option>Haryana</option><option>UP</option><option>Rajasthan</option></select></label>
+    <label>Market <select><option>All Markets</option><option>Azadpur</option><option>Vashi</option><option>Amritsar</option><option>Indore</option></select></label>
+  </div>
+  <div class="big-card">
+    <table>
+      <thead><tr><th>Crop</th><th>Market</th><th>State</th><th>Min Price</th><th>Max Price</th><th>Modal Price</th><th>vs MSP</th></tr></thead>
+      <tbody>
+        <tr><td>Wheat</td><td>Amritsar</td><td>Punjab</td><td>₹2,200</td><td>₹2,400</td><td>₹2,275</td><td><span class="pill pill-green">At MSP</span></td></tr>
+        <tr><td>Rice (Common)</td><td>Azadpur</td><td>Delhi</td><td>₹1,900</td><td>₹2,300</td><td>₹2,100</td><td><span class="pill pill-amber">-₹83</span></td></tr>
+        <tr><td>Maize</td><td>Gulbarga</td><td>Karnataka</td><td>₹1,800</td><td>₹2,050</td><td>₹1,980</td><td><span class="pill pill-green">+₹90</span></td></tr>
+        <tr><td>Cotton</td><td>Dhule</td><td>Maharashtra</td><td>₹5,600</td><td>₹6,200</td><td>₹5,940</td><td><span class="pill pill-green">+₹140</span></td></tr>
+        <tr><td>Gram (Chana)</td><td>Indore</td><td>MP</td><td>₹4,900</td><td>₹5,400</td><td>₹5,100</td><td><span class="pill pill-red">-₹240</span></td></tr>
+        <tr><td>Mustard</td><td>Bharatpur</td><td>Rajasthan</td><td>₹5,200</td><td>₹5,700</td><td>₹5,450</td><td><span class="pill pill-green">+₹250</span></td></tr>
+        <tr><td>Sugarcane</td><td>Muzaffarnagar</td><td>UP</td><td>₹350</td><td>₹370</td><td>₹360</td><td><span class="pill pill-amber">At FRP</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="font-size:11px;color:var(--text3);margin-top:10px">Data indicative. Source: Agmarknet / e-NAM. Updated daily.</div>
+</div>
+
+<!-- PROFIT / LOSS CALCULATOR -->
+<div class="section" id="calculator">
+  <div class="section-title">Profit / Loss Calculator</div>
+  <div class="section-desc">Enter your crop details to estimate profit, loss, and break-even price</div>
+  <div class="calculator-card">
+    <div class="calculator-visual">
+      <div class="visual-head">
+        <div class="visual-tag">Wheat calculator</div>
+        <div class="visual-title">Harvest insight</div>
+      </div>
+      <div class="wheat-illu">
+        <svg viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wheat illustration">
+          <defs>
+            <linearGradient id="wheatGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f3c663"/>
+              <stop offset="100%" stop-color="#d49b2a"/>
+            </linearGradient>
+          </defs>
+          <path d="M110 250V60" stroke="#7e5a1a" stroke-width="12" stroke-linecap="round"/>
+          <path d="M110 70C110 70 150 62 145 30" stroke="#7e5a1a" stroke-width="10" stroke-linecap="round"/>
+          <path d="M110 100C110 100 160 90 155 58" stroke="#7e5a1a" stroke-width="10" stroke-linecap="round"/>
+          <path d="M110 130C110 130 165 120 160 88" stroke="#7e5a1a" stroke-width="10" stroke-linecap="round"/>
+          <path d="M110 160C110 160 162 150 158 118" stroke="#7e5a1a" stroke-width="10" stroke-linecap="round"/>
+          <path d="M110 190C110 190 155 180 152 148" stroke="#7e5a1a" stroke-width="10" stroke-linecap="round"/>
+          <path d="M110 70C110 70 70 62 75 30" stroke="#7e5a1a" stroke-width="10" stroke-linecap="round"/>
+          <path d="M110 100C110 100 60 90 65 58" stroke="#7e5a1a" stroke-width="10" stroke-linecap="round"/>
+          <path d="M110 130C110 130 55 120 60 88" stroke="#7e5a1a" stroke-width="10" stroke-linecap="round"/>
+          <path d="M110 160C110 160 58 150 62 118" stroke="#7e5a1a" stroke-width="10" stroke-linecap="round"/>
+          <path d="M110 190C110 190 65 180 68 148" stroke="#7e5a1a" stroke-width="10" stroke-linecap="round"/>
+          <circle cx="110" cy="32" r="16" fill="url(#wheatGradient)"/>
+          <circle cx="110" cy="58" r="14" fill="url(#wheatGradient)"/>
+          <circle cx="110" cy="88" r="12" fill="url(#wheatGradient)"/>
+          <circle cx="110" cy="118" r="10" fill="url(#wheatGradient)"/>
+          <circle cx="110" cy="148" r="8" fill="url(#wheatGradient)"/>
+          <circle cx="110" cy="178" r="6" fill="url(#wheatGradient)"/>
+        </svg>
+      </div>
+      <div class="visual-copy">
+        <div class="visual-copy-title">Turn crop details into insight</div>
+        <div class="visual-copy-text">Use the calculator to estimate profit and break-even price based on current MSP and production.</div>
+      </div>
+    </div>
+    <div class="calculator-inputs">
+      <div class="calc-panel">
+        
+        <div class="calc-input-group">
+          <label>Crop</label>
+          <select id="calc-crop" onchange="calcPL()">
+            <option value="2275">Wheat (MSP ₹2,275)</option>
+            <option value="2183">Rice (MSP ₹2,183)</option>
+            <option value="1890">Maize (MSP ₹1,890)</option>
+            <option value="5800">Cotton (MSP ₹5,800)</option>
+            <option value="5440">Gram (MSP ₹5,440)</option>
+          </select>
+        </div>
+        <div class="calc-input-group">
+          <label>Quantity produced (quintals)</label>
+          <input type="number" id="qty" value="100" oninput="calcPL()">
+        </div>
+        <div class="calc-input-group">
+          <label>Total cost of cultivation (₹)</label>
+          <input type="number" id="cost" value="180000" oninput="calcPL()">
+        </div>
+        <div class="calc-input-group">
+          <label>Expected selling price (₹ per quintal)</label>
+          <input type="number" id="sell-price" value="2275" oninput="calcPL()">
+        </div>
+        <button class="primary-button" onclick="calcPL()">CALCULATE</button>
+      </div>
+      <div class="calc-summary" id="calc-result">
+        <div class="card-title" style="margin-bottom:12px">Result</div>
+        <div class="result-row"><span class="result-label">Revenue</span><span class="result-val" id="r-revenue">₹2,27,500</span></div>
+        <div class="result-row"><span class="result-label">Total Cost</span><span class="result-val" id="r-cost">₹1,80,000</span></div>
+        <div class="result-row"><span class="result-label">Break-even Price</span><span class="result-val" id="r-be">₹1,800/q</span></div>
+        <div class="result-row"><span class="result-label">Margin %</span><span class="result-val" id="r-margin">20.9%</span></div>
+        <div class="result-row"><span class="result-label" style="font-weight:600">Net Profit / Loss</span><span class="result-val up" id="r-pl" style="font-size:18px">+₹47,500</span></div>
+      </div>
+      <div class="insight-card insight-profit" id="calc-insight" style="margin-top:16px">
+        <div class="insight-title" id="ci-title">Profitable zone</div>
+        <div class="insight-text" id="ci-text">Your selling price is above break-even. You are in profit. Consider selling when market price is highest.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CROP PRODUCTION -->
+<div class="section" id="production">
+  <div class="section-title">Crop Production Statistics</div>
+  <div class="section-desc">Area, production, and yield figures for major Indian crops</div>
+  <div class="filter-row">
+    <label>Season <select><option>Kharif 2024</option><option>Rabi 2023-24</option><option>Zaid 2024</option></select></label>
+    <label>View <select><option>Production (MT)</option><option>Area (Lakh Ha)</option><option>Yield (Kg/Ha)</option></select></label>
+  </div>
+  <div class="row row-2">
+    <div class="big-card">
+      <div class="card-title">Production volume — major crops (million tonnes)</div>
+      <div style="margin-top:14px" id="prod-bars"></div>
+    </div>
+    <div class="big-card">
+      <div class="card-title">Year-on-year change</div>
+      <table style="margin-top:8px">
+        <thead><tr><th>Crop</th><th>2023</th><th>2024</th><th>Change</th></tr></thead>
+        <tbody>
+          <tr><td>Rice</td><td>132.0 MT</td><td>136.3 MT</td><td><span class="pill pill-green">+3.3%</span></td></tr>
+          <tr><td>Wheat</td><td>110.5 MT</td><td>113.5 MT</td><td><span class="pill pill-green">+2.7%</span></td></tr>
+          <tr><td>Maize</td><td>33.7 MT</td><td>35.1 MT</td><td><span class="pill pill-green">+4.2%</span></td></tr>
+          <tr><td>Cotton</td><td>31.8 MT</td><td>29.4 MT</td><td><span class="pill pill-red">-7.5%</span></td></tr>
+          <tr><td>Gram</td><td>13.1 MT</td><td>14.3 MT</td><td><span class="pill pill-green">+9.2%</span></td></tr>
+          <tr><td>Mustard</td><td>11.8 MT</td><td>12.6 MT</td><td><span class="pill pill-green">+6.8%</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT / EXPORT -->
+<div class="section" id="trade">
+  <div class="section-title">Import / Export</div>
+  <div class="section-desc">National agricultural trade statistics for India</div>
+  <div class="row row-2">
+    <div class="big-card">
+      <div class="card-title">Top export destinations</div>
+      <div id="export-list" style="margin-top:10px"></div>
+    </div>
+    <div class="big-card">
+      <div class="card-title">Agri export by commodity (USD billion)</div>
+      <div style="margin-top:14px" id="export-bars"></div>
+    </div>
+  </div>
+  <div class="row row-3" style="margin-top:0">
+    <div class="card"><div class="card-title">Total Agri Exports</div><div class="metric">$53.1B</div><div class="metric-sub up">▲ 9.8% YoY</div></div>
+    <div class="card"><div class="card-title">Total Agri Imports</div><div class="metric">$31.4B</div><div class="metric-sub down">▲ 2.1% YoY</div></div>
+    <div class="card"><div class="card-title">Trade Balance</div><div class="metric up">+$21.7B</div><div class="metric-sub">Surplus</div></div>
+  </div>
+</div>
+
+<!-- INSIGHTS -->
+<div class="section" id="insights">
+  <div class="section-title">Smart Insights</div>
+  <div class="section-desc">Recommendations based on price, production, and trade data</div>
+  <div class="insight-card insight-profit">
+    <div class="insight-title">Wheat — Strong selling window</div>
+    <div class="insight-text">Mandi prices are at MSP (₹2,275/q). Production is up 2.7% but export demand remains strong at $2.1B. Current margins are healthy. Ideal to sell 60–70% of stock now and hold rest for 3–4 weeks.</div>
+  </div>
+  <div class="insight-card insight-neutral">
+    <div class="insight-title">Rice — Caution: prices slightly below MSP in some mandis</div>
+    <div class="insight-text">Some markets show rice prices ₹80–100 below MSP of ₹2,183/q. Production up 3.3% YoY adds supply pressure. Wait for government procurement (PMGKAY) to begin in your district before selling if possible.</div>
+  </div>
+  <div class="insight-card insight-loss">
+    <div class="insight-title">Cotton — Risk zone: production down, prices uncertain</div>
+    <div class="insight-text">Cotton production fell 7.5% due to pest pressure. However, international prices are also soft. MSP is ₹5,800/q but many mandis are trading below this. Strongly consider selling to CCI if available in your district.</div>
+  </div>
+  <div class="insight-card insight-profit">
+    <div class="insight-title">Mustard — Excellent outlook</div>
+    <div class="insight-text">Prices are ₹250 above MSP at ₹5,450/q. Export demand for edible oils strong. Production up 6.8%. This is a profitable crop with good export linkage. Farmers can sell freely in open market.</div>
+  </div>
+  <div class="insight-card insight-profit">
+    <div class="insight-title">Gram — Recovery underway</div>
+    <div class="insight-text">Despite prices being slightly below MSP, production increase of 9.2% signals improved supply. Government buffer stocking likely. Prices expected to firm up in Q2 2025. Consider short-term storage if you have capacity.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+const cropData={
+  Wheat:{price:2275,msp:2275,prod:'113.5 MT',export:'$2.1B',trend:[2180,2200,2220,2240,2260,2275],states:[['Punjab',32],['Haryana',18],['UP',31],['MP',22],['Rajasthan',12]]},
+  Rice:{price:2100,msp:2183,prod:'136.3 MT',export:'$9.6B',trend:[2050,2080,2100,2090,2110,2100],states:[['WB',18],['UP',17],['Punjab',16],['Odisha',9],['AP',14]]},
+  Maize:{price:1980,msp:1890,prod:'35.1 MT',export:'$0.9B',trend:[1850,1900,1930,1960,1970,1980],states:[['Karnataka',8],['Rajasthan',6],['MP',7],['Bihar',5],['AP',5]]},
+  Cotton:{price:5940,msp:5800,prod:'29.4 MT',export:'$7.3B',trend:[5700,5800,5850,5900,5930,5940],states:[['Gujarat',11],['Maharashtra',9],['Telangana',6],['Rajasthan',3],['Punjab',2]]},
+  Sugarcane:{price:360,msp:315,prod:'430 MT',export:'$4.8B',trend:[340,345,350,355,358,360],states:[['UP',220],['Maharashtra',125],['Karnataka',48],['TN',32],['Bihar',17]]},
+  Gram:{price:5100,msp:5440,prod:'14.3 MT',export:'$1.1B',trend:[4900,5000,5050,5100,5090,5100],states:[['MP',4.5],['Rajasthan',3.8],['Maharashtra',2.1],['UP',1.9],['Karnataka',1.5]]},
+  Mustard:{price:5450,msp:5200,prod:'12.6 MT',export:'$0.7B',trend:[5100,5200,5250,5300,5400,5450],states:[['Rajasthan',6.5],['Haryana',2.1],['UP',1.8],['MP',1.2],['WB',0.7]]}
+};
+
+function updateDashboard(selectedCrop){
+  // Update active crop item
+  document.querySelectorAll('.crop-item').forEach(item => item.classList.remove('active'));
+  document.querySelector(`.crop-item[data-crop="${selectedCrop}"]`).classList.add('active');
+
+  const d=cropData[selectedCrop];
+  document.getElementById('d-price').textContent='₹'+d.price.toLocaleString('en-IN');
+  document.getElementById('d-msp').textContent='₹'+d.msp.toLocaleString('en-IN');
+  document.getElementById('d-prod').textContent=d.prod;
+  document.getElementById('d-export').textContent=d.export;
+  drawSparkline(d.trend);
+  drawStateBars(d.states);
+  document.getElementById('rec-title').textContent=selectedCrop+' — '+(d.price>=d.msp?'Good selling window':'Monitor closely');
+}
+
+function drawSparkline(data){
+  const el=document.getElementById('sparkline');
+  const max=Math.max(...data);
+  el.innerHTML=data.map(v=>`<div class="spark-bar" style="height:${Math.round(v/max*45)+5}px" title="₹${v}"></div>`).join('');
+}
+
+function drawStateBars(states){
+  const el=document.getElementById('state-bars');
+  const max=Math.max(...states.map(s=>s[1]));
+  el.innerHTML=states.map(s=>`<div class="bar-wrap"><div class="bar-label"><span>${s[0]}</span><span>${s[1]} MT</span></div><div class="bar-bg"><div class="bar-fill bar-green" style="width:${Math.round(s[1]/max*100)}%"></div></div></div>`).join('');
+}
+
+const prodData=[['Rice',136.3],['Wheat',113.5],['Sugarcane',89.2],['Maize',35.1],['Cotton',29.4],['Gram',14.3],['Mustard',12.6]];
+function drawProdBars(){
+  const el=document.getElementById('prod-bars');
+  const max=prodData[0][1];
+  el.innerHTML=prodData.map(d=>`<div class="bar-wrap"><div class="bar-label"><span>${d[0]}</span><span>${d[1]} MT</span></div><div class="bar-bg"><div class="bar-fill bar-blue" style="width:${Math.round(d[1]/max*100)}%"></div></div></div>`).join('');
+}
+
+const exportData=[['Rice',9.6],['Spices',4.1],['Cotton',7.3],['Buffalo Meat',3.8],['Sugarcane',4.8],['Marine Products',6.2]];
+function drawExportBars(){
+  const el=document.getElementById('export-bars');
+  const max=Math.max(...exportData.map(d=>d[1]));
+  el.innerHTML=exportData.map(d=>`<div class="bar-wrap"><div class="bar-label"><span>${d[0]}</span><span>$${d[1]}B</span></div><div class="bar-bg"><div class="bar-fill bar-amber" style="width:${Math.round(d[1]/max*100)}%"></div></div></div>`).join('');
+}
+
+const exportDest=[{flag:'🇺🇸',name:'United States',val:'$4.2B',crop:'Rice, Spices'},{flag:'🇨🇳',name:'China',val:'$3.8B',crop:'Cotton, Oilseeds'},{flag:'🇧🇩',name:'Bangladesh',val:'$3.1B',crop:'Rice, Onion'},{flag:'🇦🇪',name:'UAE',val:'$2.9B',crop:'Rice, Cereals'},{flag:'🇻🇳',name:'Vietnam',val:'$1.7B',crop:'Rice, Maize'}];
+function drawExportDest(){
+  const el=document.getElementById('export-list');
+  el.innerHTML=exportDest.map(d=>`<div class="trade-row"><div class="trade-flag">${d.flag}</div><div class="trade-info"><div class="trade-name">${d.name}</div><div class="trade-val">${d.crop}</div></div><div class="trade-amount">${d.val}</div></div>`).join('');
+}
+
+function calcPL(){
+  const qty=parseFloat(document.getElementById('qty').value)||0;
+  const cost=parseFloat(document.getElementById('cost').value)||0;
+  const sp=parseFloat(document.getElementById('sell-price').value)||0;
+  const rev=qty*sp;
+  const pl=rev-cost;
+  const be=qty>0?cost/qty:0;
+  const margin=rev>0?(pl/rev*100):0;
+  document.getElementById('r-revenue').textContent='₹'+Math.round(rev).toLocaleString('en-IN');
+  document.getElementById('r-cost').textContent='₹'+Math.round(cost).toLocaleString('en-IN');
+  document.getElementById('r-be').textContent='₹'+Math.round(be)+'/q';
+  document.getElementById('r-margin').textContent=margin.toFixed(1)+'%';
+  const plEl=document.getElementById('r-pl');
+  plEl.textContent=(pl>=0?'+':'−')+' ₹'+Math.round(Math.abs(pl)).toLocaleString('en-IN');
+  plEl.className='result-val '+(pl>=0?'up':'down');
+  const box=document.getElementById('calc-result');
+  const ins=document.getElementById('calc-insight');
+  const ciT=document.getElementById('ci-title');
+  const ciX=document.getElementById('ci-text');
+  if(pl>0&&sp>be*1.1){
+    box.style.background='var(--green-light)';
+    ins.className='insight-card insight-profit';
+    ciT.textContent='Profitable zone';
+    ciX.textContent='Selling price is '+(Math.round((sp/be-1)*100))+'% above break-even. Good profit. Consider selling now.';
+  } else if(pl>=0){
+    box.style.background='var(--amber-light)';
+    ins.className='insight-card insight-neutral';
+    ciT.textContent='Low margin — proceed with caution';
+    ciX.textContent='Above break-even but margins are thin. Explore reducing input costs next season.';
+  } else {
+    box.style.background='var(--red-light)';
+    ins.className='insight-card insight-loss';
+    ciT.textContent='Loss alert';
+    ciX.textContent='Selling price below break-even of ₹'+Math.round(be)+'/q. Consider MSP scheme instead.';
+  }
+}
+
+function switchTab(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  setLanguage('en');
+  updateDashboard('Wheat');
+  drawProdBars();
+  drawExportBars();
+  drawExportDest();
+  calcPL();
+  document.addEventListener('touchstart',function(){},false);
+});
+</script>
+</body>
+</html>
