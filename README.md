@@ -13,7 +13,6 @@ kisanArth/
 ├── data/
 │   ├── crops.json         ← All crop data (prices, MSP, agronomy, mandis)
 │   ├── trade.json         ← Import/export trade statistics
-│   └── insights.json      ← Smart farming insights
 └── public/
     └── index.html         ← Frontend (served by Express)
 ```
@@ -59,7 +58,6 @@ Base URL: `http://localhost:3000/api`
 | GET | `/prices` | All mandi prices (optional `?crop=wheat&state=punjab`) |
 | POST | `/calculator` | Profit/Loss calculation |
 | GET | `/trade` | Import/export statistics |
-| GET | `/insights` | Smart farming insights (optional `?crop=wheat&type=profit`) |
 | GET | `/production` | Crop production statistics |
 | GET | `/search` | Search crops by soil/region/season (`?q=loamy`, `?season=Rabi`, `?region=punjab`) |
 
